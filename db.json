@@ -29,6 +29,26 @@
       "date": "July 22, 2022",
       "time": "11:00",
       "organizer": "Carey Wales"
+    },
+    {
+      "id": "1c4ff348-06ed-4d99-8488-f0d329abdd60",
+      "category": "animal welfare",
+      "title": "AAA",
+      "description": "BBB",
+      "location": "SSSS",
+      "date": "1111",
+      "time": "2222",
+      "organizer": "Avi C"
+    },
+    {
+      "id": "1e6db816-daee-4e65-af9c-8cbbae3531c3",
+      "category": "food",
+      "title": "VVV",
+      "description": "GGGG",
+      "location": "EEEEE",
+      "date": "12313",
+      "time": "234234",
+      "organizer": "Avi C"
     }
   ]
 }
