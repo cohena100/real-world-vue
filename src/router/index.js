@@ -5,11 +5,12 @@ import EventLayout from "../views/event/EventLayout.vue";
 import EventDetails from "../views/event/EventDetails.vue";
 import EventRegister from "../views/event/EventRegister.vue";
 import EventEdit from "../views/event/EventEdit.vue";
+import EventCreate from "@/views/EventCreate.vue";
 import NotFound from "@/views/NotFound.vue";
 import NetworkError from "@/views/NetworkError.vue";
 import NProgress from "nprogress";
 import EventService from "@/services/EventService.js";
-import GStore from "@/store";
+import GStore from "@/store/index2.js";
 
 const routes = [
   {
@@ -23,21 +24,20 @@ const routes = [
     name: "EventLayout",
     props: true,
     component: EventLayout,
-    beforeEnter: (to) => {
-      return EventService.getEvent(to.params.id)
-        .then((response) => {
-          GStore.event = response.data;
-        })
-        .catch((error) => {
-          if (error.response && error.response.status == 404) {
-            return {
-              name: "404Resource",
-              params: { resource: "event" },
-            };
-          } else {
-            return { name: "NetworkError" };
-          }
-        });
+    beforeEnter: async (to) => {
+      try {
+        const response = await EventService.getEvent(to.params.id);
+        GStore.event = response.data;
+      } catch (error) {
+        if (error.response && error.response.status == 404) {
+          return {
+            name: "404Resource",
+            params: { resource: "event" },
+          };
+        } else {
+          return { name: "NetworkError" };
+        }
+      }
     },
     children: [
       {
@@ -67,6 +67,11 @@ const routes = [
     path: "/about",
     name: "AboutView",
     component: AboutView,
+  },
+  {
+    path: "/create",
+    name: "EventCreate",
+    component: EventCreate,
   },
   {
     path: "/:catchAll(.*)",
