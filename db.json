@@ -89,6 +89,16 @@
       "date": "23423",
       "time": "234324",
       "organizer": "Avi C"
+    },
+    {
+      "id": "dd8ba3de-c4d0-4319-8e5b-516ee95827bb",
+      "category": "food",
+      "title": "mmmm",
+      "description": "hfgh",
+      "location": "fghgfh",
+      "date": "23423",
+      "time": "34543",
+      "organizer": "Avi C"
     }
   ]
 }

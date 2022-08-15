@@ -12,7 +12,9 @@ const apiClient = axios.create({
 
 export default {
   getAllEvents() {
-    return apiClient.get("/events");
+    return apiClient.get("/events").catch((error) => {
+      throw error;
+    });
   },
   getEvents(perPage, page) {
     return apiClient.get("/events", {

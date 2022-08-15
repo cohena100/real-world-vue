@@ -11,11 +11,11 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   computed: {
-    flashMessage() {
-      return this.$store.state.flashMessage;
-    },
+    ...mapState(["flashMessage"]),
   },
 };
 </script>

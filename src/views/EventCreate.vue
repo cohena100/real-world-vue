@@ -81,7 +81,7 @@ export default {
       this.$store.dispatch("createEvent", event).then(() => {
         this.$router.push({
           name: "EventDetails",
-          params: { id: this.$store.state.event.id },
+          params: { id: event.id },
         });
       });
     },
