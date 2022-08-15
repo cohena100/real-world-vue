@@ -9,8 +9,7 @@ import EventCreate from "@/views/EventCreate.vue";
 import NotFound from "@/views/NotFound.vue";
 import NetworkError from "@/views/NetworkError.vue";
 import NProgress from "nprogress";
-import EventService from "@/services/EventService.js";
-import GStore from "@/store/index2.js";
+import store from "../store";
 
 const routes = [
   {
@@ -18,6 +17,20 @@ const routes = [
     name: "EventList",
     component: EventList,
     props: (route) => ({ page: parseInt(route.query.page) || 1 }),
+    beforeEnter: async () => {
+      try {
+        await store.dispatch("fetchEvents");
+      } catch (error) {
+        if (error.response && error.response.status == 404) {
+          return {
+            name: "404Resource",
+            params: { resource: "event" },
+          };
+        } else {
+          return { name: "NetworkError" };
+        }
+      }
+    },
   },
   {
     path: "/events/:id",
@@ -26,8 +39,7 @@ const routes = [
     component: EventLayout,
     beforeEnter: async (to) => {
       try {
-        const response = await EventService.getEvent(to.params.id);
-        GStore.event = response.data;
+        await store.dispatch("fetchEvent", to.params.id);
       } catch (error) {
         if (error.response && error.response.status == 404) {
           return {

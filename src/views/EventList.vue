@@ -26,7 +26,6 @@
 <script>
 // @ is an alias to /src
 import EventCard from "@/components/EventCard.vue";
-import EventService from "@/services/EventService.js";
 
 export default {
   name: "EventList",
@@ -34,41 +33,18 @@ export default {
   components: {
     EventCard,
   },
-  data() {
-    return {
-      events: null,
-      totalEvents: 0,
-    };
-  },
-  beforeRouteEnter(routeTo, routeFrom, next) {
-    EventService.getEvents(2, parseInt(routeTo.query.page) || 1)
-      .then((response) => {
-        next((comp) => {
-          comp.events = response.data;
-          comp.totalEvents = response.headers["x-total-count"];
-        });
-      })
-      .catch(() => {
-        next({ name: "NetworkError" });
-      });
-  },
-  beforeRouteUpdate(routeTo) {
-    return EventService.getEvents(2, parseInt(routeTo.query.page) || 1)
-      .then((response) => {
-        this.events = response.data; // <---
-        this.totalEvents = response.headers["x-total-count"]; // <---
-      })
-      .catch(() => {
-        return { name: "NetworkError" }; // <---
-      });
+  beforeRouteUpdate() {
+    return this.$store.dispatch("fetchEvents");
   },
   computed: {
     hasNextPage() {
-      // First, calculate total pages
-      var totalPages = Math.ceil(this.totalEvents / 2); // 2 is events per page
-
-      // Then check to see if the current page is less than the total pages.
+      const totalEvents = this.$store.state.events.length;
+      var totalPages = Math.ceil(totalEvents / 2);
       return this.page < totalPages;
+    },
+    events() {
+      const start = (this.page - 1) * 2;
+      return this.$store.state.events.slice(start, start + 2);
     },
   },
 };
