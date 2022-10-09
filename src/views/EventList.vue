@@ -1,5 +1,5 @@
 <template>
-  <h1>Events for Good</h1>
+  <h1 data-testid="event-list-title">Events for Good</h1>
   <div class="events">
     <router-link
       class="event-link"
@@ -7,7 +7,7 @@
       v-for="event in events"
       :key="event.id"
     >
-      <EventCard :event="event" />
+      <EventCard data-testid="event" :event="event" />
     </router-link>
     <div class="pagination">
       <router-link
