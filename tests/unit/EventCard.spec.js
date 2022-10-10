@@ -9,11 +9,6 @@ describe("EventCard", () => {
       date: "September 29th, 2022",
       title: "Coaching Little League",
     };
-    mount(EventCard, {
-      props: {
-        event,
-      },
-    });
     const wrapper = mount(EventCard, {
       props: {
         event,

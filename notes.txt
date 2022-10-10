@@ -1,0 +1,27 @@
+npx jest smoke --watch
+json-server --watch db.json
+npm run serve
+
+      console.log("avic", JSON.stringify(this.$store.state.events));
+      console.log("avic", this.page);
+        console.log("avic", store.state.events);
+
+
+  it("gets the list of events", () => {
+    wrapper = mountEventList({
+      plugins: {
+        store: {
+          state: () => ({
+            events: mockEvents,
+          }),
+        },
+      },
+    });
+    const events = wrapper.findAll('[data-testid="event"]');
+    expect(events).toHaveLength(mockEvents.length);
+    events.forEach((event, i) => {
+      const eventText = event.text();
+      expect(eventText).toContain(mockEvents[i].title);
+      expect(eventText).toContain(mockEvents[i].date);
+    });
+  });
