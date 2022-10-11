@@ -43,20 +43,6 @@ export default {
   beforeRouteUpdate() {
     return this.$store.dispatch("fetchEvents");
   },
-  async mounted() {
-    try {
-      await this.$store.dispatch("fetchEvents");
-    } catch (error) {
-      if (error.response && error.response.status == 404) {
-        this.$router.push({
-          name: "404Resource",
-          params: { resource: "event" },
-        });
-      } else {
-        this.$router.push({ name: "404Resource" });
-      }
-    }
-  },
   computed: {
     hasNextPage() {
       const totalEvents = this.$store.state.events.length;

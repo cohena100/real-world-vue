@@ -5,15 +5,16 @@ import router from "@/router";
 import { events as mockEvents } from "../../db.json";
 
 function mountEventList(config = {}) {
-  config.mountOptions = config.mountOptions || {};
-  config.plugins = config.plugins || {};
   config.props = config.props || {};
+  const store = createStore();
+  router.$store = store;
   return mount(EventList, {
     global: {
-      plugins: [createStore(config.plugins.store), router],
+      plugins: [store, router],
     },
-    ...config.mountOptions,
-    ...config.props,
+    props: {
+      ...config.props,
+    },
   });
 }
 
@@ -35,30 +36,8 @@ describe("EventList", () => {
     });
   });
 
-  // it("gets the list of events", () => {
-  //   wrapper = mountEventList({
-  //     plugins: {
-  //       store: {
-  //         state: () => ({
-  //           events: mockEvents,
-  //         }),
-  //       },
-  //     },
-  //   });
-  //   const events = wrapper.findAll('[data-testid="event"]');
-  //   expect(events).toHaveLength(mockEvents.length);
-  //   events.forEach((event, i) => {
-  //     const eventText = event.text();
-  //     expect(eventText).toContain(mockEvents[i].title);
-  //     expect(eventText).toContain(mockEvents[i].date);
-  //   });
-  // });
-
   it("gets the list of events", async () => {
-    wrapper = mount(EventList, {
-      global: {
-        plugins: [createStore(), router],
-      },
+    wrapper = mountEventList({
       props: {
         page: 1,
       },

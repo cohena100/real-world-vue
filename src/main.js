@@ -6,5 +6,5 @@ import "nprogress/nprogress.css";
 
 const app = createApp(App);
 app.use(store).use(router);
-router.app = app;
+router.$store = store;
 app.mount("#app");
